@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 import os
 import sys
-
+sys.path.append("/home/ec2-user/web/iamvivek/resume")
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
