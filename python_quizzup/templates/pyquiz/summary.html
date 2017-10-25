@@ -1,0 +1,21 @@
+{% extends 'pyquiz/base.html' %}
+{% block content %}
+                            <!-- Primary box -->
+                            <div class="box box-primary">
+                                <div title="" data-toggle="tooltip" class="box-header" data-original-title="PyQuiz Information Bulletin">
+                                    <h3 class="box-title">Choose Quiz</h3>
+                                    
+                                </div>
+                                <div class="box-body">
+                                    <p>Please select a quiz number to review your answers:</p>
+                                    {% for week_id in quiz_list %}
+                                        <p>
+                                            <button  type="button" class="btn btn-inverse quiz-review spinner" data-redirect-to="{% url 'review' week_id %}">Quiz  {{ week_id }}</button>
+                                        </p>
+                                    {% endfor %}                                    
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <p></p>
+                                </div><!-- /.box-footer-->
+                            </div><!-- /.box -->
+{% endblock content %}

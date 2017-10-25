@@ -1,0 +1,204 @@
+{% extends 'pyquiz/base.html' %}
+{% block page_styles %}
+        <!-- badges.css -->
+        <link href="/static/css/badges.css" rel="stylesheet" type="text/css" />
+        <link href="/static/css/jquery.feedBackBox.css" rel="stylesheet" type="text/css">
+{% endblock page_styles %}
+{% block content %}
+                            <!-- Primary box -->
+                            <div class="box box-primary">
+                                {% if week_id %}
+                                <div title="" data-toggle="tooltip" class="box-header" data-original-title="PyQuiz Information Bulletin">
+                                    <h3 class="box-title">Take Quiz</h3>
+                                    
+                                </div>
+                                <div class="box-body">
+                                    Your Weekly Quiz is ready. Please click on the link below:
+                                    <p>
+                                        <button onClick="ga('send', 'event', 'button', 'click', 'Take-Quiz');" type="button" class="btn btn-inverse spinner" id="take-quiz" data-redirect-to="{% url 'quiz' week_id %}">Take the Quiz</button>
+                                    </p>
+                                    {% if other_weeks %}
+                                    <p>You still have to complete the following quizzes to catch up with the normal world:</p>
+                                    {% for quiz_id in other_weeks %}
+                                        <p>
+                                            <button onClick="ga('send', 'event', 'button', 'click', 'Take-Quiz');" type="button" class="btn btn-inverse take-other-quiz spinner"  data-redirect-to="{% url 'quiz' quiz_id %}">Take the Quiz  {{ quiz_id }}</button>
+                                        </p>
+                                    {% endfor %}                                    
+                                    {% endif %}
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <p>All the best!!!</p>
+                                </div><!-- /.box-footer-->
+                                {% else %}
+                                <div title="" data-toggle="tooltip" class="box-header" data-original-title="PyQuiz Information Bulletin">
+                                    <h3 class="box-title">Congrats!!!</h3>
+                                </div>
+                                <div class="box-body">
+                                    {% if other_weeks %}
+                                    <p>You still have to complete the following quizzes to catch up with the normal world:</p>
+                                    {% for quiz_id in other_weeks %}
+                                        <p>
+                                            <button onClick="ga('send', 'event', 'button', 'click', 'Take-Quiz');" type="button" class="btn btn-inverse spinner" id="take-quiz" data-redirect-to="{% url 'quiz' quiz_id %}">Take the Quiz  {{ quiz_id }}</button>
+                                        </p>
+                                    {% endfor %}        
+                                    {% else %}
+                                    <p>You have completed all your quizzes till this week. Now, take a look at the below stats and carry on with your other work.</p><br/>
+                                    {% endif %}
+                                </div><!-- /.box-body -->
+                                {% endif %}
+                            </div><!-- /.box -->
+                            <div class="row">
+                               <div class="col-md-12">
+                                  <!-- Default box -->
+                                  <div class="box box-info">
+                                      <div class="box-header">
+                                          <h3 class="box-title">LeaderBoard</h3>
+                                          <div class="box-tools pull-right">
+                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                          </div>
+                                      </div>
+                                      <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="box box-solid box-warning">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Overall Top 3</h3>
+                                                        <div class="box-tools pull-right">
+                                                            <button data-widget="collapse" class="btn btn-warning btn-sm"><i class="fa fa-minus"></i></button>
+                                                            <button data-widget="remove" class="btn btn-warning btn-sm"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="overall" class="box-body">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width: 10px">#</th>
+                                                                    <th>Pythonite</th>
+                                                                    <th style="width: 10px">Points</th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div><!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <a class="spinner" href="{% url 'leaderboard' '/overall' %}" target="_blank" >More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                    </div>
+                                                </div><!-- /.box -->
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- Success box -->
+                                                <div class="box box-solid box-success">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Monthly Top 3</h3>
+                                                        <div class="box-tools pull-right">
+                                                            <button data-widget="collapse" class="btn btn-success btn-sm"><i class="fa fa-minus"></i></button>
+                                                            <button data-widget="remove" class="btn btn-success btn-sm"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="monthly" class="box-body">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width: 10px">#</th>
+                                                                    <th>Pythonite</th>
+                                                                    <th style="width: 10px">Points</th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div><!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <a class="spinner" href="{% url 'leaderboard' '/monthly/' last_week_id %}" target="_blank" >More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                    </div>
+                                                </div><!-- /.box -->
+                                            </div><!-- /.col -->
+                                            <div class="col-md-4">
+                                                <!-- Primary box -->
+                                                <div class="box box-solid box-primary">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">Weekly Top 3</h3>
+                                                        <div class="box-tools pull-right">
+                                                            <button data-widget="collapse" class="btn btn-primary btn-sm"><i class="fa fa-minus"></i></button>
+                                                            <button data-widget="remove" class="btn btn-primary btn-sm"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="weekly" class="box-body">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width: 10px">#</th>
+                                                                    <th>Pythonite</th>
+                                                                    <th style="width: 10px">Points</th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div><!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                        <a class="spinner" href="{% url 'leaderboard' '/weekly/' last_week_id%}" target="_blank" >More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                    </div>
+                                                </div><!-- /.box -->
+                                            </div>
+                                        </div> <!-- /.row -->
+                                      </div> <!-- /.box-body -->
+                                  </div><!-- /.box -->
+                               </div> <!-- / .col-md-12 -->
+                            </div> <!-- /.row -->
+                            <!--<h4 class="page-header">-->
+                                <!--Rewards Section-->
+                            <!--</h4>-->
+                            <div class="row">
+                               <div class="col-md-12">
+                                  <!-- Default box -->
+                                  <div class="box box-info">
+                                      <div class="box-header">
+                                          <h3 class="box-title">My Badges ({{ user_badges_count }}/{{ badges|length }}) Unlocked</h3>
+                                          <div class="box-tools pull-right">
+                                            <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                          </div>
+                                      </div>
+                                      <div class="box-body">
+                                        <div class="row">
+                                        {% for key, value in badges.iteritems %}
+                                            <div class="col-md-4 {% if forloop.counter|divisibleby:3 %}badge-break{% endif %}">
+                                                <div id="badge_{{ key }}" class="ec-bdg-frame-side">
+                                                    <div class="ec-badges-{% if value.unlocked %}on{% else %}off{% endif %}">
+                                                        <div class="ec-{{ value.badge_details.badge_name }}-{% if value.unlocked %}on{% else %}off{% endif %}"></div>
+                                                    </div>
+                                                    <div class="ec-descp">
+                                                        {{ value.badge_details.badge_description }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </div> <!-- /.row -->
+                                      </div><!-- /.box-body -->
+                                  </div><!-- /.box -->
+                              </div> <!-- / .col-md-12 -->
+                            </div> <!-- /.row -->
+                            <div id="feedback"></div>
+
+{% endblock content %}
+{% block page_scripts %}
+<script src="/static/js/jquery.feedBackBox.js"></script>
+<script type='text/javascript'>
+    $(document).ready(function()
+    {
+        function defer_load(url, target)
+        {
+            $.getJSON(url, function(data)
+            {
+                var target_html = "";
+                var index = 1;
+                $.each(data.leaderboard, function(key, item) {
+                    target_html += "<tr><td>" + index++ + "</td><td>" + item.first_name + " " +  item.last_name + "</td><td>" + item.points;
+                });
+                target.find("table tbody").append(target_html);
+            });
+        }
+        defer_load("{% url 'leaderboard' '/overall' %}?limit=3", $("#overall"));
+        defer_load("{% url 'leaderboard' '/weekly/' last_week_id %}?limit=3", $("#weekly"));
+        defer_load("{% url 'leaderboard' '/monthly/' last_week_id %}?limit=3", $("#monthly"));
+        $('#feedback').feedBackBox({'isUsernameEnabled':false,'userName':"{{user_profile.email}}", 'csrf_token':"{{ csrf_token }}"});
+    });
+</script>
+{% endblock page_scripts %}

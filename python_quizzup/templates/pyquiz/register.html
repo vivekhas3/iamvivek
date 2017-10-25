@@ -1,0 +1,74 @@
+{% extends 'pyquiz/base_static.html' %}
+{% block title %}Register{% endblock title %}
+{% block page_styles %}
+        <link href="/static/css/bootstrap-social.css" rel="stylesheet" >
+{% endblock page_styles %}
+{% block content %}
+            <div class="form-box form-box-static" id="login-box">
+                {% if success %}
+                    We have sent you a verification mail, Please check your inbox.<br/>
+                    <a class="spinner" href="{% url 'index' %}">Go to HomePage</a>
+                {% else %}
+
+                <div class="header">Register</div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="body bg-gray">
+                        <div class="form-group ">
+                            <input type="text" name="first_name" class="form-control" placeholder="First Name" required data-error="There's no one without a first name" required data-error="Minimum of 3 characters" data-minlength="3" value="{{ post_data.first_name }}"/>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group ">
+                            <input type="text" name="last_name" class="form-control" placeholder="Last Name" required data-error="You need to have a last name buddy" required value="{{ post_data.last_name }}" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group {% if error.username %} has-error {% endif %}">
+                            <input id="username" type="email" name="username" class="form-control" placeholder="Email ID" required data-error="Bruh, that email address is invalid" value="{{ post_data.username }}" />
+                            <div class="help-block with-errors">{{ error.username }}</div>
+                        </div>
+                        
+                        <div class="form-group ">
+                            <input type="password" name="password" class="form-control" placeholder="Password" data-minlength="6" required data-error="Minimum of 6 characters" id="inputPassword" value="" />
+                            <div class="help-block with-errors"></div>
+                        </div>          
+                        <div class="form-group ">
+                            <input type="password" name="confirm_password" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" data-minlength="6" required data-error="Minimum of 6 characters" data-match="#inputPassword" data-match-error="Whoops, these don't match"  />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group ">
+                            <input type="text" name="role" class="form-control" placeholder="Job Designation"  required data-error="Minimum of 3 characters" data-minlength="3" value="{{ post_data.role }}" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="footer">                                                               
+                        <button id="register-submit" type="submit" class="btn bg-olive btn-block spinner">Register me</button>  
+                        <p class="text-center" style="font-size:12px;" >or sign in with your existing accounts</p>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                <a class="btn btn-social-icon btn-google-plus" href="/accounts/google/login/"><i class="fa fa-google-plus"></i></a>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                <a class="btn btn-social-icon btn-linkedin" href="/accounts/linkedin_oauth2/login/"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                <a class="btn btn-social-icon btn-github" href="/accounts/github/login/"><i class="fa fa-github"></i></a>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-1">
+                                <a class="btn btn-social-icon btn-facebook" href="/accounts/facebook/login/"><i class="fa fa-facebook"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+        
+                <div class="margin text-center copyrights">
+                    <span>&copy; 2014 Vivek Soundrapandi</span>
+
+                </div>
+            </div>
+{% endblock content %}
+
