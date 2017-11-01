@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'quizzup',
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'root',                  # Not used with sqlite3.
+        'USER': 'vivek',                      # Not used with sqlite3.
+        'PASSWORD': 'global!23',                  # Not used with sqlite3.
         'HOST': 'localhost',          
     }
 }
@@ -107,8 +107,9 @@ STATICFILES_DIRS = (
     BASE_DIR + "/static/",
 )
 TEMPLATE_DIRS = (
-    BASE_DIR+'/templates',
+     os.path.join(BASE_DIR,'templates'),
 )
+
 LOGIN_URL = '/pyquiz/login/'
 LOGIN_REDIRECT_URL = '/pyquiz/'
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
